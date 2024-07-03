@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+            background-color: #f7f7f7;
+        }
+
+        header {
+            background-color: #BB2649;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Edit Post</h1>
+    </header>
+    <form action="/post/update/<%= post.id %>" method="POST">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="<%= post.title %>" required><br>
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="content" rows="20" required><%= post.content %></textarea><br>
+        <input type="submit" value="Update">
+    </form>
+</body>
+
+</html>

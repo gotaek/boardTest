@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Posts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background-color: #000080;
+      /* Pantone 2023 Color of the Year: Viva Magenta */
+      color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      margin: 0;
+      font-size: 32px;
+      padding: 10px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .posts-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .post-card {
+      margin: 10px;
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      width: calc(60% - 20px);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .post-card:hover {
+      background-color: #f2f2f2;
+    }
+
+
+    .post-header{
+      display:flex;
+      justify-content:space-between;
+      width:90%;
+    }
+    .post-header .post-date {
+            font-size: 0.9em;
+            color: #555;
+            text-align: right;
+            flex: 0;
+            width: auto;
+            white-space: nowrap;
+            align-self: center;
+
+        }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 class="site-title">Posts</h1>
+    <nav>
+      <% if (user) { %>
+        <a href="/logout">Logout</a>
+        <a href="/post/new">New Post</a>
+        <% } else { %>
+          <a href="/login">Login</a>
+          <a href="/register">Register</a>
+          <% } %>
+    </nav>
+  </header>
+
+  <script>
+    function viewPost(postId) {
+      window.location.href = '/post/' + postId;
+    }
+  </script>
+
+<div class="posts-container">
+  <% posts.forEach(post=> { %>
+    <div class="post-card" onclick="viewPost(<%= post.id %>)">
+      <div class="post-header">
+      <h2>
+        <%= post.title %>
+      </h2>
+        <p class="post-date">
+          <%= new Date(post.created_at).toISOString().split('T')[0]
+            %>
+        </p>
+      </div>
+    </div>
+  <% }); %>
+</div>
+
+
+</body>
+
+</html>

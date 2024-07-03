@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>
+        <%= post.title %>
+    </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #000080;
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header a{
+            color:white;
+            margin: 0;
+            font-size: 32px;
+            padding: 10px;
+            text-decoration:none;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+
+        .post {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .update-button {
+            background-color: #007BFF;
+            /* Green color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+        .delete-button {
+            background-color: #FF5733;
+            /* Red color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="/">Home</a>
+        <nav>
+        <% if (user) { %>
+            <a href="/logout">Logout</a>
+            <a href="/post/new">New Post</a>
+            <% } else { %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <% } %>
+            </nav>
+    </header>
+
+    <script>
+        function deletePost(id) {
+            fetch(`/post/delete/${id}`, {
+                method: 'DELETE'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = '/';
+                } else {
+                    alert("Error deleting post");
+                }
+            });
+        }
+        function viewUpdatePage(postId) {
+            window.location.href = '/post/update/' + postId;
+        }
+
+    </script>
+    <div class="post">
+        
+        <h1>
+            <%= post.title %>
+        </h1>
+        <p>
+            <%= post.content %>
+        </p>
+        <p>Created at: <%= post.created_at %>
+        </p>
+        <% if (authorization) { %> 
+        
+            <button class="update-button" onclick="viewUpdatePage(<%= post.id %>)">Update</button>
+            <button class="delete-button" onclick="deletePost(<%= post.id %>)">Delete</button>
+        <% } %>
+    </div>
+</body>
+
+</html>
